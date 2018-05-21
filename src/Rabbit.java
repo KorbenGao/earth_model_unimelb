@@ -5,17 +5,21 @@ public class Rabbit {
     private int age = 0;
     private int food = 5;
 
-
+    /**
+     * constructor
+     */
     public Rabbit() {
         this.age = 0;
         this.food = (int) (5 * Math.random());
     }
 
     /**
-     * increase the daisy's age by 1
+     * decrease the rabbit's food by 1
+     * <p>
+     * If the rabbit's food is more than zero, its age increases by 1;
+     * If the rabbit's food is no more than zero, its age increases by 6;
      */
     public void age() {
-        //System.out.println(this.age);
         food = food - 1;
         if (food > 0) {
             age = age + 1;
@@ -26,10 +30,12 @@ public class Rabbit {
     }
 
     /**
-     * @param foodNum
+     * feed the rabbit by a number of food
+     *
+     * @param food
      */
-    public void eat(int foodNum) {
-        food = food + foodNum;
+    public void feed(int food) {
+        this.food = this.food + food;
     }
 
     public int getAge() {
@@ -46,15 +52,6 @@ public class Rabbit {
 
     public void setFood(int food) {
         this.food = food;
-    }
-
-    public void init() {
-        this.food = 5;
-        this.age = 0;
-    }
-
-    public void feed(int food) {
-        this.food = this.food + food;
     }
 
 }

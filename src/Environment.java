@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -47,6 +46,7 @@ public class Environment {
     // specifies all the living orange daisies
     private ArrayList<Daisy> orangeDaisy;
 
+    // specifies all the living rabbits
     private ArrayList<Rabbit> rabbitList;
 
     // keyboard input
@@ -74,7 +74,6 @@ public class Environment {
                 currentGrid[i][j] = new Grid();
             }
         }
-        // newGrid = new Grid[GRIDSIZE][GRIDSIZE];
         globalTemperature = 0;
         luminosityIncrease = true;
     }
@@ -119,30 +118,33 @@ public class Environment {
     }
 
     /**
-     * initialize the environment, put original white and black daisies on grids
+     * initialize the environment
+     * 1) put original white on grids
+     * 2) put black daisies on grids
+     * 3) put rabbits on grids
      * just like the set-up in Netlogo
      */
     public void init() {
         System.out.println("set the albedo of white daisy :");
-        Parameter.setAlbedoWhite(0.75);//keyboard.nextDouble());
+        Parameter.setAlbedoWhite(keyboard.nextDouble());
 
         System.out.println("set the albedo of black daisy :");
-        Parameter.setAlbedoBlack(0.25);//keyboard.nextDouble());
+        Parameter.setAlbedoBlack(keyboard.nextDouble());
 
         System.out.println("set the percentage of white daisies (%) :");
-        Parameter.setPercentageOfWhite(40);//keyboard.nextDouble());
+        Parameter.setPercentageOfWhite(keyboard.nextDouble());
 
         System.out.println("set the percentage of black daisies (%) :");
-        Parameter.setPercentageOfBlack(40);//keyboard.nextDouble());
+        Parameter.setPercentageOfBlack(keyboard.nextDouble());
 
         System.out.println("set the percentage of rabbit (%) :");
-        Parameter.setPercentageOfRabbit(20);//keyboard.nextDouble());
+        Parameter.setPercentageOfRabbit(keyboard.nextDouble());
 
         System.out.println("set the albedo of surface :");
-        Parameter.setAlbedoSurface(0.4);//keyboard.nextDouble());
+        Parameter.setAlbedoSurface(keyboard.nextDouble());
 
         System.out.println("set solar luminosity :");
-        Parameter.setLuminosity(0.8);//keyboard.nextDouble());
+        Parameter.setLuminosity(keyboard.nextDouble());
 
 
         int whiteSize = (int) ((GRIDSIZE * GRIDSIZE) * Parameter.getPercentageOfWhite() / 100);
@@ -183,7 +185,7 @@ public class Environment {
             }
         }
 
-        // put rabbit on grids
+        // put rabbits on grids
         while (rabbitSize > (daisiesPosition.size() - whiteSize - blackSize)) {
             int currentCount = daisiesPosition.size();
             int position = (int) (Math.random() * (GRIDSIZE * GRIDSIZE));
@@ -200,11 +202,11 @@ public class Environment {
         }
 
         System.out.println("set the scenario (choose one of the five scenarios below) :" + "and just type the number");
-        System.out.println("1. maintain current luminosity");
-        System.out.println("2. low solar luminosity");
-        System.out.println("3. our solar luminosity");
-        System.out.println("4. high solar luminosity");
-        System.out.println("5. ramp-up-ramp-down");
+        System.out.println("[1] maintain current luminosity");
+        System.out.println("[2] low solar luminosity");
+        System.out.println("[3] our solar luminosity");
+        System.out.println("[4] high solar luminosity");
+        System.out.println("[5] ramp-up-ramp-down");
 
         Parameter.setScenario(keyboard.nextInt());
         if (Parameter.getScenario() == 2) {
@@ -219,7 +221,6 @@ public class Environment {
         if (Parameter.getScenario() == 5) {
             Parameter.setLuminosity(0.8);
         }
-
         calcEachTemperature();
         calcGlobalTemperature();
     }
@@ -231,6 +232,9 @@ public class Environment {
         grid[row][column].setCurrentDaisy(daisy);
     }
 
+    /**
+     * put a rabbit on a grid
+     */
     public void putRabbitOnGrid(int row, int column, Grid[][] grid, Rabbit rabbit) {
         grid[row][column].setCurrentRabbit(rabbit);
     }
@@ -269,7 +273,7 @@ public class Environment {
         year = keyboard.nextInt();
         int time = 1;
 
-        Object[] head = {"year", "num_white", "num_black", "num_orange", "num_rabbit", "global_temp", "luminosity"};
+        Object[] head = {"year", "num_white", "num_black", "num_orange", "num_rabbit", "all_daisy", "global_temp", "luminosity"};
         List<Object> headList = Arrays.asList(head);
 
         File csvFile = null;
@@ -286,6 +290,7 @@ public class Environment {
             rowList.add(numberOfBlack());
             rowList.add(numberOfOrange());
             rowList.add(numberOfRabbit());
+            rowList.add(numberOfWhite() + numberOfBlack() + numberOfOrange());
             rowList.add(convertDouble(globalTemperature));
             rowList.add(convertDouble(Parameter.getLuminosity()));
             writeRow(rowList, csvWriter);
@@ -312,6 +317,7 @@ public class Environment {
             rowList.add(numberOfBlack());
             rowList.add(numberOfOrange());
             rowList.add(numberOfRabbit());
+            rowList.add(numberOfWhite() + numberOfBlack() + numberOfOrange());
             rowList.add(convertDouble(globalTemperature));
             rowList.add(convertDouble(Parameter.getLuminosity()));
             try {
@@ -450,7 +456,8 @@ public class Environment {
     }
 
     /**
-     * increase all daisy's age by 1 and check if some daisies die
+     * increase all daisies' age and all rabbits' age;
+     * check whether a daisy or a rabbit is die;
      */
     public void ageAllDaisyAndRabbit() {
         for (int i = 0; i < GRIDSIZE; i++) {
@@ -473,12 +480,8 @@ public class Environment {
                     if (null != currentGrid[i][j].getCurrentRabbit()) {
                         currentGrid[i][j].getCurrentRabbit().age();
                         if (currentGrid[i][j].getCurrentRabbit().getAge() >= MAXAGE) {
-//                            if (currentGrid[i][j].getCurrentRabbit().getFood() > 0) {
-//                                currentGrid[i][j].getCurrentRabbit().init();
-//                            } else {
                             rabbitList.remove(currentGrid[i][j].getCurrentRabbit());
                             currentGrid[i][j].rabbitDie();
-//                            }
                         }
                     }
 
@@ -487,19 +490,26 @@ public class Environment {
         }
     }
 
+    /**
+     * Feed the all the rabbits;
+     * <p>
+     * If more than one neighbours of a rabbit are daisies, the rebbit will randomly choose one daisy to eat.
+     * After the the rabbit eats the daisy, it will move to the daisy grid.
+     * If there is no more than one neighbours of a rabbit are daisies. The rabbit will randomly move to a un-occupied neighbour grid to seek for food.
+     */
     public void feedAllRabbit() {
         for (int i = 0; i < GRIDSIZE; i++) {
             for (int j = 0; j < GRIDSIZE; j++) {
                 if (currentGrid[i][j].isCovered()) {
                     if (null != currentGrid[i][j].getCurrentRabbit()) {
                         ArrayList<Grid> neighbourList = getNeighbours(i, j);
-                        ArrayList<Grid> daisyList = new ArrayList<Grid>();
+                        ArrayList<Grid> daisyList = new ArrayList<>();
                         for (Grid grid : neighbourList) {
                             if (grid.isCovered() && null != grid.getCurrentDaisy()) {
                                 daisyList.add(grid);
                             }
                         }
-                        if (daisyList.size() > 0) {
+                        if (daisyList.size() > 1) {
                             int random_index = (int) (daisyList.size() * Math.random());
                             Grid feed_grid = daisyList.get(random_index);
                             Grid rabbit_grid = currentGrid[i][j];
