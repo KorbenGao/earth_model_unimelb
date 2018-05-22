@@ -98,11 +98,6 @@
               <item name="earth_model_unimelb" type="b2602c69:ProjectViewProjectNode" />
               <item name="earth_model_unimelb" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="earth_model_unimelb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="earth_model_unimelb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -116,7 +111,6 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -202,6 +196,14 @@
       <workItem from="1526904094843" duration="15000" />
       <workItem from="1526955964792" duration="239000" />
     </task>
+    <task id="LOCAL-00001" summary="-wornspace">
+      <created>1526956947693</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1526956947693</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -209,7 +211,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-30" width="1280" height="830" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="0" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -221,7 +222,7 @@
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32986626" />
       <window_info anchor="right" id="Run" order="9" weight="0.3625" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.45515394" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.44310576" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" x="458" y="127" width="260" height="673" id="Project" order="0" visible="true" weight="0.175" />
@@ -241,16 +242,12 @@
       <window_info anchor="bottom" id="Find" order="6" weight="0.32931727" />
     </layout>
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="2" />
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="-wornspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="-wornspace" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Grid.java">
@@ -427,6 +424,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10931">
           <caret line="643" column="49" lean-forward="true" selection-start-line="643" selection-start-column="49" selection-end-line="643" selection-end-column="49" />
+
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -472,9 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10931">
           <caret line="643" column="44" selection-start-line="643" selection-start-column="44" selection-end-line="643" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -524,9 +519,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -545,6 +537,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Grid.java">
+
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1071">
           <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
@@ -562,32 +555,40 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DaisyWorld.java">
+      <provider selected="true" editor-type-id="text-editor">
+
+        <state relative-caret-position="442">
+          <caret line="26" column="42" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
+
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Daisy.java">
+      <provider selected="true" editor-type-id="text-editor">
+
+        <state relative-caret-position="374">
+          <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/result.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="42" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Rabbit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+
+        <state relative-caret-position="17">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="58" selection-end-column="7" />
+
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parameter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="58" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Environment.java">
-      <provider selected="true" editor-type-id="text-editor">
+
         <state relative-caret-position="225">
           <caret line="266" column="47" lean-forward="true" selection-start-line="266" selection-start-column="47" selection-end-line="266" selection-end-column="47" />
           <folding>
@@ -596,5 +597,6 @@
         </state>
       </provider>
     </entry>
+
   </component>
 </project>
