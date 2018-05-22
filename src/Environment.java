@@ -309,6 +309,7 @@ public class Environment {
             feedAllRabbit();
             ageAllDaisyAndRabbit();
             sproutDaisy();
+
             calcGlobalTemperature();
 
             List<Object> rowList = new ArrayList<Object>();
