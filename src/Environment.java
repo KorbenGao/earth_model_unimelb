@@ -13,19 +13,8 @@ import java.util.Scanner;
 /**
  * the environment has GRIDSIZE * GRIDSIZE grids and a global temperature
  * it updates every year, daisy can sprout or die during passing time
+ * rabbits can feed, age and breed during passing time
  */
-
-/**
- * the extension of this model is an added third type of daisy called orange
- * daisy the orange daisy is a kind of mutated daisy. there is no orange daisy
- * in the beginning, but it can be grown in a grid whose neighbors containing at
- * least one daisy in a very low probability. and its offspring can only be
- * white or black depending on the global temperature
- * <p>
- * this orange daisy is added to mediate the environment and prevent either
- * white or black daisy to die out
- */
-
 public class Environment {
 
     // max age of daisy
@@ -42,9 +31,6 @@ public class Environment {
 
     // specifies all the living black daisies
     private ArrayList<Daisy> blackDaisy;
-
-    // specifies all the living orange daisies
-    private ArrayList<Daisy> orangeDaisy;
 
     // specifies all the living rabbits
     private ArrayList<Rabbit> rabbitList;
@@ -66,7 +52,6 @@ public class Environment {
     public Environment() {
         whiteDaisy = new ArrayList<Daisy>();
         blackDaisy = new ArrayList<Daisy>();
-        orangeDaisy = new ArrayList<Daisy>();
         rabbitList = new ArrayList<Rabbit>();
         currentGrid = new Grid[GRIDSIZE][GRIDSIZE];
         for (int i = 0; i < GRIDSIZE; i++) {
@@ -106,24 +91,12 @@ public class Environment {
         return blackDaisy.size();
     }
 
-    /**
-     * @return the number of orange daisies
-     */
-    public int numberOfOrange() {
-        return orangeDaisy.size();
-    }
-
+    //return number of rabbit
     public int numberOfRabbit() {
         return rabbitList.size();
     }
 
-    /**
-     * initialize the environment
-     * 1) put original white on grids
-     * 2) put black daisies on grids
-     * 3) put rabbits on grids
-     * just like the set-up in Netlogo
-     */
+    //init the parameter
     public void init() {
         System.out.println("set the albedo of white daisy :");
         Parameter.setAlbedoWhite(keyboard.nextDouble());
@@ -273,7 +246,7 @@ public class Environment {
         year = keyboard.nextInt();
         int time = 1;
 
-        Object[] head = {"year", "num_white", "num_black", "num_orange", "num_rabbit", "all_daisy", "global_temp", "luminosity"};
+        Object[] head = {"year", "num_white", "num_black", "num_rabbit", "all_daisy", "global_temp", "luminosity"};
         List<Object> headList = Arrays.asList(head);
 
         File csvFile = null;
@@ -288,9 +261,8 @@ public class Environment {
             rowList.add(0);
             rowList.add(numberOfWhite());
             rowList.add(numberOfBlack());
-            rowList.add(numberOfOrange());
             rowList.add(numberOfRabbit());
-            rowList.add(numberOfWhite() + numberOfBlack() + numberOfOrange());
+            rowList.add(numberOfWhite() + numberOfBlack());
             rowList.add(convertDouble(globalTemperature));
             rowList.add(convertDouble(Parameter.getLuminosity()));
             writeRow(rowList, csvWriter);
@@ -316,9 +288,8 @@ public class Environment {
             rowList.add(time);
             rowList.add(numberOfWhite());
             rowList.add(numberOfBlack());
-            rowList.add(numberOfOrange());
             rowList.add(numberOfRabbit());
-            rowList.add(numberOfWhite() + numberOfBlack() + numberOfOrange());
+            rowList.add(numberOfWhite() + numberOfBlack());
             rowList.add(convertDouble(globalTemperature));
             rowList.add(convertDouble(Parameter.getLuminosity()));
             try {
@@ -472,8 +443,6 @@ public class Environment {
                                 whiteDaisy.remove(currentGrid[i][j].getCurrentDaisy());
                             } else if (color.equals("black")) {
                                 blackDaisy.remove(currentGrid[i][j].getCurrentDaisy());
-                            } else if (color.equals("orange")) {
-                                orangeDaisy.remove(currentGrid[i][j].getCurrentDaisy());
                             }
                             currentGrid[i][j].daisyDie();
                         }
@@ -522,9 +491,6 @@ public class Environment {
                             if (feed_grid.getCurrentDaisy().getColor().equals("black")) {
                                 blackDaisy.remove(feed_grid.getCurrentDaisy());
                             }
-                            if (feed_grid.getCurrentDaisy().getColor().equals("orange")) {
-                                orangeDaisy.remove(feed_grid.getCurrentDaisy());
-                            }
                             //rabbit.setFood(rabbit.getFood() / 2);
                             feed_grid.setCurrentRabbit(rabbit);
                             if (rabbit.getFood() > 10) {
@@ -556,8 +522,7 @@ public class Environment {
     }
 
     /**
-     * sprout a white or black daisy in a grid's neighbor or an orange daisy is born
-     * in an empty grid. both happens in some probability
+     * sprout a white or black daisy in a grid's neighbor 
      */
     public void sproutDaisy() {
         for (int i = 0; i < GRIDSIZE; i++) {
@@ -567,12 +532,6 @@ public class Environment {
                             - 0.0032 * Math.pow(currentGrid[i][j].getLocalTemperature(), 2) - 0.6443;
                     if (Math.random() < seedProb) {
                         String color = currentGrid[i][j].getCurrentDaisy().getColor();
-                        if (color.equals("orange")) {
-                            if (getGlobalTemperature() < 22.5)
-                                color = "black";
-                            else
-                                color = "white";
-                        }
                         Grid neighbour = seekNeighbour(i, j);
                         if (neighbour != null) {
                             if (color.equals("white")) {
@@ -586,31 +545,9 @@ public class Environment {
                             }
                         }
                     }
-                } else if (!currentGrid[i][j].isCovered()) {
-                    if (notAllNeighbourEmpty(i, j)) {
-                        if (Math.random() < Parameter.getProbOfOrangeSprout()) {
-                            Daisy newDaisy = new Daisy(Parameter.getAlbedoOrange(), 0, "orange");
-                            currentGrid[i][j].setCurrentDaisy(newDaisy);
-                            orangeDaisy.add(newDaisy);
-                        }
-                    }
                 }
             }
         }
-    }
-
-    /**
-     * check if the grid's neighbors contain at least one daisy
-     */
-    public boolean notAllNeighbourEmpty(int row, int column) {
-        ArrayList<Grid> neighbours = getNeighbours(row, column);
-        boolean returnBool = false;
-        for (Iterator<Grid> it = neighbours.iterator(); it.hasNext(); ) {
-            Grid grid = it.next();
-            if (grid.isCovered() && null != grid.getCurrentDaisy())
-                returnBool = true;
-        }
-        return returnBool;
     }
 
     /**

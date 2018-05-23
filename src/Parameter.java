@@ -8,7 +8,8 @@ public class Parameter {
 
 	// percentage of white daisies of all grids
 	private static double percentageOfWhite;
-
+	
+	// percentage of rabit
 	private static double percentageOfRabbit;
 
 	// albedo of white daisy
@@ -16,9 +17,6 @@ public class Parameter {
 
 	// albedo of black daisy
 	private static double albedoBlack;
-
-	// albedo of orange daisy which is fixed
-	private static double albedoOrange = 0.5;
 
 	// albedo of empty grid
 	private static double albedoSurface;
@@ -28,10 +26,6 @@ public class Parameter {
 
 	// specifies the number of scenario which is used
 	private static int scenario;
-
-	// specifies the probability of orange daisy to sprout
-	private static double probOfOrangeSprout = 0.02;
-
 	/**
 	 * set the percentage of black daisies
 	 */
@@ -99,13 +93,6 @@ public class Parameter {
 	}
 
 	/**
-	 * @return albedo of orange daisy
-	 */
-	public static double getAlbedoOrange() {
-		return albedoOrange;
-	}
-
-	/**
 	 * @return albedo of empty grid
 	 */
 	public static double getAlbedoSurface() {
@@ -145,13 +132,6 @@ public class Parameter {
 	 */
 	public static void setScenario(int scenario) {
 		Parameter.scenario = scenario;
-	}
-
-	/**
-	 * @return the probability of orange daisy to sprout
-	 */
-	public static double getProbOfOrangeSprout() {
-		return probOfOrangeSprout;
 	}
 
 }

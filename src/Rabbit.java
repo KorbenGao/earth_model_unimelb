@@ -24,7 +24,7 @@ public class Rabbit {
         if (food > 0) {
             age = age + 1;
         } else {
-            age = age + 6;
+            age = age + 3;
         }
 
     }
